@@ -1,0 +1,120 @@
+<!-- 继承base.html -->
+{% extends 'base.html' %}
+
+{% block title %} index {% endblock %}
+
+{% block basehtml-head-link %}
+
+{% endblock %}
+
+{% block basehtml-body %}
+    <nav class="navbar navbar-default" id="body-header">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">博客|Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">随笔 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">新闻 </a></li>
+                    <li><a href="#">博文 </a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right sys-user">
+                    <li>
+                        <img src="/static/images/default_avatar_img.png" class="img-circle sys-user-png">
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            {{ user.username }}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">用户信息</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'app_user:logout' %}">注销</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+
+
+
+    </nav>
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12 div_main">
+                <!-- indexhtml-mian 用于写自己独有的html内容-->
+                {% block indexhtml-mian %} {% endblock %}
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                Panel content
+                            </div>
+                            <div class="panel-footer">Panel footer</div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                Panel content
+                            </div>
+                            <div class="panel-footer">Panel footer</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="article_list">
+                            {% for article in article_list %}
+                                <div class="article-item">
+                                    <h5><a href="/app_blog/personal_article/{{ article.user.username }}/p/{{ article.pk }}.html">{{ article.title }}</a></h5>
+                                    <div class="article-desc">
+                                        <span>
+                                            <a href="#"><img width="56" height="56" src="media/{{ article.user.avatar }}"></a>
+                                        </span>
+                                        <span>
+                                            {{ article.desc }}
+                                        </span>
+                                    </div>
+                                    <div class="small">
+                                        <span><a href="/app_blog/personal_blog/{{ article.user.username }}/">{{ article.user.username }}</a></span> &nbsp;&nbsp;&nbsp;
+                                        <span>发布于&nbsp;&nbsp;{{ article.create_time|date:"Y-m-d H:i" }}</span> &nbsp;&nbsp;&nbsp;
+                                        <span class="glyphicon glyphicon-comment">评论({{ article.comment_count }})</span>&nbsp;&nbsp;&nbsp;
+                                        <span class="glyphicon glyphicon-thumbs-up">点赞({{ article.like_count }})</span>
+                                    </div>
+                                </div>
+                                <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                Panel content
+                            </div>
+                            <div class="panel-footer">Panel footer</div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                Panel content
+                            </div>
+                            <div class="panel-footer">Panel footer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
